@@ -13,7 +13,7 @@ This is a boilerplate in order to quickly get going with new projects in React a
  - [ESLint config file](http://eslint.org/)
 
 ## Offline First
-UpUp is a wrapper for Service Workers which is making it possible to run this boilerplate offline. You can manage the Service Workers in Chrome here: [chrome://serviceworker-internals](chrome://serviceworker-internals). Service Workers are currently supported in [these browsers](caniuse.com/#search=service%20workers).
+UpUp is a wrapper for Service Workers which is making it possible to run this boilerplate offline. You can manage the Service Workers in Chrome here: [chrome://serviceworker-internals](chrome://serviceworker-internals). Service Workers are currently supported in [these browsers](http://caniuse.com/#search=service%20workers).
 
 ## Production vs Development
 UpUp is not included in the development build but Redux Devtools is. Vice versa when building for production.
