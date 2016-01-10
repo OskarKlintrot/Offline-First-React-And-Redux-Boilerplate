@@ -1,10 +1,10 @@
 {
   "name": "Boilerplate",
   "version": "0.0.1",
-  "description": "A boilerplate to quickly get started with a React/Redux offline first app",
+  "description": "A boilerplate to quickly get started with an offline first React/Redux app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OskarKlintrot/React-React-Router-Redux-and-Webpack-boilerplate"
+    "url": "https://github.com/OskarKlintrot/Offline-First-React-And-Redux-Boilerplate"
   },
   "scripts": {
     "start": "webpack-dev-server",
