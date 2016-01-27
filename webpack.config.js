@@ -5,7 +5,6 @@ var sourcePath = path.resolve(__dirname, 'src')
 var nodeModulesPath = path.resolve(__dirname, 'node_modules')
 var upupPath = path.resolve(__dirname, 'src/app/scripts/upup/')
 var upupStartPath = path.resolve(__dirname, 'src/app/scripts/upup/upup.start.js')
-var materialPath = path.resolve(__dirname, 'src/app/scripts/material.js')
 var redirectToHTTPSPath = path.resolve(__dirname, 'src/app/scripts/redirectToHTTPS.js')
 var TransferWebpackPlugin = require('transfer-webpack-plugin')
 
@@ -55,13 +54,13 @@ var config = {
         test: /\.(js|jsx)$/,
         loader: 'eslint-loader',
         include: [path.resolve(__dirname, "src/app")],
-        exclude: [nodeModulesPath, upupPath, materialPath, redirectToHTTPSPath],
+        exclude: [nodeModulesPath, upupPath, redirectToHTTPSPath],
       },
     ],
     loaders: [
       {
         test: /\.(js|jsx)$/,
-        exclude: [nodeModulesPath, upupPath, materialPath, redirectToHTTPSPath],
+        exclude: [nodeModulesPath, upupPath, redirectToHTTPSPath],
         loaders: [
             'react-hot',
             'babel?' + JSON.stringify({
@@ -74,7 +73,7 @@ var config = {
         loader: "file?name=[name].[ext]",
       },
       {
-        test: /(material|redirectToHTTPS).js$/,
+        test: /(redirectToHTTPS).js$/,
         loader: "file?name=scripts/[name].[ext]",
       },
       {
