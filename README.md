@@ -5,6 +5,8 @@ This is a boilerplate in order to quickly get going with new projects in React a
 
  - [React](http://facebook.github.io/react/)
  - [React-Router](https://www.npmjs.com/package/react-router)
+ - Bootstrap 3
+ - Font Awesome
  - [Redux](http://redux.js.org/)
  - [Redux Thunk](https://www.npmjs.com/package/redux-thunk)
  - [Redux DevTools](https://www.npmjs.com/package/redux-devtools)
@@ -23,8 +25,11 @@ Note that all source code is located under `src/`.
 ```
 +---app
 |   +---components
+|   |   +---main
 |   |   +---root
 |   |   \---shared
+|   +---containers
+|   |   \---mainContainer
 |   +---redux
 |   |   +---actions
 |   |   \---store
@@ -33,6 +38,8 @@ Note that all source code is located under `src/`.
 |       \---upup
 \---www
     \---css
+        +---bootstrap
+        \---font-awesome
 ```
 
 ## Installation
