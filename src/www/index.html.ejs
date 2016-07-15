@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="description" content=".">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="scripts/redirectToHTTPS.js"></script>
+  </head>
+
+  <body>
+    <div id="app"></div>
+
+  <% if (htmlWebpackPlugin.options.production){%>
+    <script src="upup.min.js"></script>
+    <script src="scripts/upup.start.js"></script>
+  <% } %>
+  </body>
+
+</html>

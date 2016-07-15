@@ -10,7 +10,7 @@ const Root = (props) => {
   return (
     <Provider store={ store }>
       <div>
-        <Router routes={ routes } history={history} />
+        <Router routes={ routes } history={ history } />
         <DevTools />
       </div>
     </Provider>

@@ -1,5 +1,6 @@
 import React from 'react'
-import {Link} from 'react-router'
+import { Link } from 'react-router'
+import C from '../constants'
 
 const About = () => {
   return (
@@ -25,7 +26,7 @@ const About = () => {
           Webpack
         </li>
       </ul>
-      <Link to={'/'}>Go back...</Link>
+      <Link to={ C.ROUTES.INDEX }>Go back...</Link>
     </div>
   )
 }

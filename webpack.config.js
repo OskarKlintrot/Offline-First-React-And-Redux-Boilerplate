@@ -1,34 +1,37 @@
-var webpack = require('webpack')
-var path = require('path')
-var buildPath = path.resolve(__dirname, '')
-var sourcePath = path.resolve(__dirname, 'src')
-var nodeModulesPath = path.resolve(__dirname, 'node_modules')
-var upupPath = path.resolve(__dirname, 'src/app/scripts/upup/')
-var upupStartPath = path.resolve(__dirname, 'src/app/scripts/upup/upup.start.js')
-var redirectToHTTPSPath = path.resolve(__dirname, 'src/app/scripts/redirectToHTTPS.js')
-var TransferWebpackPlugin = require('transfer-webpack-plugin')
+const webpack = require('webpack')
+const path = require('path')
+const TransferWebpackPlugin = require('transfer-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+const buildPath = path.resolve(__dirname, 'build')
+const sourcePath = path.resolve(__dirname, 'src')
+const nodeModulesPath = path.resolve(__dirname, 'node_modules')
+const upupPath = path.resolve(__dirname, sourcePath, 'app/scripts/upup/')
+const upupStartPath = path.resolve(__dirname, sourcePath, 'app/scripts/upup/upup.start.js')
+const redirectToHTTPSPath = path.resolve(__dirname, sourcePath, 'app/scripts/redirectToHTTPS.js')
+const contentBasePath = path.resolve(__dirname, sourcePath, 'www')
 
 const production = process.argv.find((element) => element === '--production') ? true : false
 
-const jsBaseEntry = [
+const baseEntry = [
   'babel-polyfill',
-  './src/app/app.jsx',
-  './src/app/scripts/redirectToHTTPS.js',
+  'font-awesome-loader!./src/www/css/font-awesome/font-awesome.config.js',
+  'bootstrap-loader/extractStyles',
+  sourcePath + '/app/app.jsx',
+  sourcePath + '/app/scripts/redirectToHTTPS.js',
 ]
 
-const jsEntry = production ? jsBaseEntry.concat([
-  './src/app/scripts/upup/upup.start.js',
-  './src/app/scripts/upup/upup.min.js',
-  './src/app/scripts/upup/upup.sw.min.js',
-]) : jsBaseEntry
+const entry = production ? baseEntry.concat([
+  sourcePath + '/app/scripts/upup/upup.start.js',
+  sourcePath + '/app/scripts/upup/upup.min.js',
+  sourcePath + '/app/scripts/upup/upup.sw.min.js',
+]) : baseEntry
 
-var config = {
-  entry: {
-    js: jsEntry,
-    html: './src/www/index.html',
-  },
+const config = {
+  entry: entry,
   devServer:{
-    contentBase: 'src/www',
+    contentBase: contentBasePath,
     devtool: 'source-map',
     hot: true,
     inline: true,
@@ -46,6 +49,17 @@ var config = {
     ], sourcePath),
     new webpack.DefinePlugin({
         PRODUCTION: production,
+        SOURCE_PATH: sourcePath
+    }),
+    new HtmlWebpackPlugin({
+      template: sourcePath + '/www/index.html.ejs',
+      filename: production ? buildPath + '/index.html' : './index.html',
+      production: production,
+      title: 'Your title here',
+      inject: true,
+    }),
+    new ExtractTextPlugin('public/style.css', {
+        allChunks: true
     }),
   ],
   module: {
@@ -85,6 +99,20 @@ var config = {
         test: /\upup.start.js$/,
         loader: "file?name=scripts/[name].[ext]",
       },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css!sass')
+      },
+      {
+        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        // Limiting the size of the woff fonts breaks font-awesome ONLY for the extract text plugin
+        // loader: "url?limit=10000"
+        loader: "url"
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+        loader: 'file'
+      },
     ],
   },
   resolve: {
@@ -106,6 +134,9 @@ if (production) {
         warnings: false,
       },
     }),
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': '"production"'
+    })
   ].concat(config.plugins)
 }
 
